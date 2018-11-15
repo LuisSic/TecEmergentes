@@ -14,9 +14,11 @@ router.get('/',function(req, res, next) {
 
 
 router.post('/SaveOrder', function (req, res, next) {
+    const io = req.app.get('io');
     if (req.headers["content-type"] == 'application/json') {
         func.SavePedido(req.body).then(response => {
                 if (response.result.n > 0) {
+                    io.emit('NewPedidoAdded');
                     res.status(201).send();
                 } else {
                     res.status(404).json({message:"No se pudo guardar el pedido"});

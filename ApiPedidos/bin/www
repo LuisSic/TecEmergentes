@@ -6,8 +6,8 @@
 
 var app = require('../app');
 var debug = require('debug')('apipedidos:server');
+const socketIO = require('socket.io');
 var http = require('http');
-
 /**
  * Get port from environment and store in Express.
  */
@@ -20,7 +20,8 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-
+const io = socketIO(server);
+app.set('io',io);
 /**
  * Listen on provided port, on all network interfaces.
  */
